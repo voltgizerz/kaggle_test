@@ -47,10 +47,10 @@ for fullspam in dataSpam:
             i += 1
             count += 1
         x += 1
-    print("Index : ", j," - Group : ", storeFound)
+    print("Index : ", j," - Group : ", list(dict.fromkeys(storeFound)))
     with open('./output.csv', 'a', newline='') as f: # INSER DATA OUTPUT
         writer = csv.writer(f)
-        writer.writerow([j,storeFound])
+        writer.writerow([j,list(dict.fromkeys(storeFound))])
     j += 1
 
 # TO DO FIX ALL SUBSTRING  
