@@ -78,7 +78,7 @@ for fullspam in range(len(dataSpam)-1):
     print("Nama Category : ", categoryFound)
     #print("\n")
     with open('./output.csv', 'a', newline='') as f:  # INSER DATA OUTPUT
-        writer = csv.writer(f, dialect='excel', encoding='utf_8_sig')
+        writer = csv.writer(f)
         writer.writerow([index, list(dict.fromkeys(storeFound))])
     index += 1
 
