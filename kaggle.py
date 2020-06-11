@@ -44,9 +44,12 @@ for fullspam in range(len(dataSpam)-1):
         splitCat = dataCat[x][1].split(', ')
         for category in splitCat:
             if splitCat[i] in fullstring:
-                simpan = dataCat[x][0]
-                categoryFound.insert(count, splitCat[i])
-                storeFound.insert(count, int(simpan))
+                if splitCat[i] not in categoryFound:  # check if roups already in list store
+                    simpan = dataCat[x][0]
+                    categoryFound.insert(count, splitCat[i])
+                    storeFound.insert(count, int(simpan))
+                else:
+                    pass
             else:
                 pass
             i += 1
@@ -57,9 +60,13 @@ for fullspam in range(len(dataSpam)-1):
     listDel = []  # STORE GROUP SUBSTRINGS WANT TO DELETED
     h = 0
     for cat in categoryFound:
-        for j in range(len(categoryFound)-1):
-            if (cat in categoryFound[j] or categoryFound[j] in cat) and len(cat) <= len(categoryFound[j]):
+        for j in range(len(categoryFound)):
+            if (cat in categoryFound[j] or categoryFound[j] in cat) and len(cat) == len(categoryFound[j]):
                 pass
+            elif (cat in categoryFound[j]) and len(cat) < len(categoryFound[j]):
+                pass
+            elif (categoryFound[j] in cat) and len(cat) < len(categoryFound[j]):
+                listDel.insert(j, int(j))
             elif (cat in categoryFound[j] or categoryFound[j] in cat) and len(cat) > len(categoryFound[j]):
                 listDel.insert(j, int(j))
             elif categoryFound[j] not in cat or cat not in categoryFound[j]:
