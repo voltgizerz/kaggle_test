@@ -52,9 +52,9 @@ for fullspam in range(len(dataSpam)-1):
             i += 1
             count += 1
         x += 1
-        #DO FILTER
+        # DO FILTER
 
-    listDel = [] #STORE GROUP SUBSTRINGS WANT TO DELETED
+    listDel = []  # STORE GROUP SUBSTRINGS WANT TO DELETED
     h = 0
     for cat in categoryFound:
         for j in range(len(categoryFound)-1):
@@ -62,21 +62,25 @@ for fullspam in range(len(dataSpam)-1):
                 pass
             elif (cat in categoryFound[j] or categoryFound[j] in cat) and len(cat) > len(categoryFound[j]):
                 listDel.insert(j, int(j))
-            elif categoryFound[j] not in cat or cat not in categoryFound[j] :
+            elif categoryFound[j] not in cat or cat not in categoryFound[j]:
                 pass
             h += 1
     # CONVERT LISTDEL DELETE DATA MULTIPLE
     listDel = list(dict.fromkeys(listDel))
     #print(listDel)
-    #DO POP storeFound
-    for i in range(len(listDel)-1):
-        storeFound.pop(listDel[i])
-        categoryFound.pop(listDel[i])
+    # DO POP storeFound
+
+    for i in range(len(listDel)):
+        # -1 all the value in dellist
+        for i in range(len(listDel)):
+            listDel[i] = listDel[i]-1
+        storeFound.pop(listDel[i]-1)
+        categoryFound.pop(listDel[i]-1)
 
     # CONVERT TO DICT FILTER SAME GROUPS
     print("Index : ", index, " | Group : ", list(dict.fromkeys(storeFound)))
-    print("Nama Category : ", categoryFound)
-    #print("\n")
+    #print("Nama Category : ", categoryFound)
+    # print("\n")
     with open('./output.csv', 'a', newline='') as f:  # INSER DATA OUTPUT
         writer = csv.writer(f)
         writer.writerow([index, list(dict.fromkeys(storeFound))])
