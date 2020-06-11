@@ -1,6 +1,6 @@
 import csv
 import os
-
+import re
 
 # OPEN LIST CATEGORY CSV
 with open('./list.csv', 'r') as f:
@@ -43,11 +43,27 @@ for fullspam in range(len(dataSpam)-1):
         i = 0
         splitCat = dataCat[x][1].split(', ')
         for category in splitCat:
+            maxLen = len(fullstring)
             if splitCat[i] in fullstring:
-                if splitCat[i] not in categoryFound:  # check if roups already in list store
-                    simpan = dataCat[x][0]
-                    categoryFound.insert(count, splitCat[i])
-                    storeFound.insert(count, int(simpan))
+                start_position = fullstring.index(splitCat[i])
+                length = len(splitCat[i])
+                # CHECKING SUBSTRINNG
+                if fullstring[start_position-1:start_position] == ' ' and fullstring[start_position+length:start_position+length+1] == ' ' or start_position == 0 and fullstring[start_position+length:start_position+length+1] == ' ' or start_position+length == maxLen and fullstring[start_position-1: start_position] == ' ':
+                    # check if roups already in list store
+                    if splitCat[i] not in categoryFound:
+                        simpan = dataCat[x][0]
+                        categoryFound.insert(count, splitCat[i])
+                        storeFound.insert(count, int(simpan))
+                    else:
+                        pass
+                elif fullstring[start_position-1:start_position].isalpha() == False and fullstring[start_position+length:start_position+length+1].isalpha() == False or start_position == 0 and fullstring[start_position+length:start_position+length+1].isalpha() == False or start_position+length == maxLen and fullstring[start_position-1: start_position].isalpha() == False:
+                    # check if roups already in list store
+                    if splitCat[i] not in categoryFound:
+                        simpan = dataCat[x][0]
+                        categoryFound.insert(count, splitCat[i])
+                        storeFound.insert(count, int(simpan))
+                    else:
+                        pass
                 else:
                     pass
             else:
@@ -74,7 +90,7 @@ for fullspam in range(len(dataSpam)-1):
             h += 1
     # CONVERT LISTDEL DELETE DATA MULTIPLE
     listDel = list(dict.fromkeys(listDel))
-    #print(listDel)
+    # print(listDel)
     # DO POP storeFound
 
     for i in range(len(listDel)):
@@ -86,7 +102,7 @@ for fullspam in range(len(dataSpam)-1):
 
     # CONVERT TO DICT FILTER SAME GROUPS
     print("Index : ", index, " | Group : ", list(dict.fromkeys(storeFound)))
-    #print("Nama Category : ", categoryFound)
+    #print("Name Category : ", categoryFound)
     # print("\n")
     with open('./output.csv', 'a', newline='') as f:  # INSER DATA OUTPUT
         writer = csv.writer(f)
